@@ -138,49 +138,49 @@ Settings::Settings() :
 	menu_height(500),
 	menu_opacity(100)
 {
-	command[CommandSettings] = new Command("preferences-desktop",
+	command[CommandSettings] = new Command("org.xfce.settings.manager",
 			_("_Settings Manager"),
 			"xfce4-settings-manager",
 			_("Failed to open settings manager."));
-	command[CommandLockScreen] = new Command("system-lock-screen",
+	command[CommandLockScreen] = new Command("xfsm-lock",
 			_("_Lock Screen"),
 			"xflock4",
 			_("Failed to lock screen."));
-	command[CommandSwitchUser] = new Command("system-users",
+	command[CommandSwitchUser] = new Command("xfsm-switch-user",
 			_("Switch _User"),
 			"gdmflexiserver",
 			_("Failed to switch user."));
-	command[CommandLogOutUser] = new Command("system-log-out",
+	command[CommandLogOutUser] = new Command("xfsm-logout",
 			_("Log _Out"),
 			"xfce4-session-logout --logout --fast",
 			_("Failed to log out."),
 			_("Are you sure you want to log out?"),
 			_("Logging out in %d seconds."));
-	command[CommandRestart] = new Command("system-reboot",
+	command[CommandRestart] = new Command("xfsm-reboot",
 			_("_Restart"),
 			"xfce4-session-logout --reboot --fast",
 			_("Failed to restart."),
 			_("Are you sure you want to restart?"),
 			_("Restarting computer in %d seconds."));
-	command[CommandShutDown] = new Command("system-shutdown",
+	command[CommandShutDown] = new Command("xfsm-shutdown",
 			_("Shut _Down"),
 			"xfce4-session-logout --halt --fast",
 			_("Failed to shut down."),
 			_("Are you sure you want to shut down?"),
 			_("Turning off computer in %d seconds."));
-	command[CommandSuspend] = new Command("system-suspend",
+	command[CommandSuspend] = new Command("xfsm-suspend",
 			_("Suspe_nd"),
 			"xfce4-session-logout --suspend",
 			_("Failed to suspend."),
 			_("Do you want to suspend to RAM?"),
 			_("Suspending computer in %d seconds."));
-	command[CommandHibernate] = new Command("system-hibernate",
+	command[CommandHibernate] = new Command("xfsm-hibernate",
 			_("_Hibernate"),
 			"xfce4-session-logout --hibernate",
 			_("Failed to hibernate."),
 			_("Do you want to suspend to disk?"),
 			_("Hibernating computer in %d seconds."));
-	command[CommandLogOut] = new Command("system-log-out",
+	command[CommandLogOut] = new Command("xfsm-shutdown",
 			_("Log Ou_t..."),
 			"xfce4-session-logout",
 			_("Failed to log out."));
