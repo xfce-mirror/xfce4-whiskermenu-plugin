@@ -469,7 +469,6 @@ void WhiskerMenu::Window::show(const Position position)
 
 	// Show window
 	gtk_window_present(m_window);
-	gtk_window_move(m_window, m_geometry.x, m_geometry.y);
 }
 
 //-----------------------------------------------------------------------------
