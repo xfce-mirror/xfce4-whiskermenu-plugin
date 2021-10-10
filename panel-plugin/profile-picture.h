@@ -18,7 +18,13 @@
 #ifndef WHISKERMENU_PROFILE_PICTURE_H
 #define WHISKERMENU_PROFILE_PICTURE_H
 
+#include "config.h"
+
 #include <gtk/gtk.h>
+
+#if HAVE_ACCOUNTSERVICE
+#include <act/act.h>
+#endif
 
 namespace WhiskerMenu
 {
@@ -44,14 +50,25 @@ public:
 	void reset_tooltip();
 
 private:
+#if HAVE_ACCOUNTSERVICE
+	void on_user_changed(ActUserManager* um, ActUser* user);
+	void on_user_loaded(ActUser* user, GParamSpec* param);
+	void on_user_info_loaded(ActUserManager* um, GParamSpec* param);
+#else
 	void on_file_changed(GFileMonitor* monitor, GFile* file, GFile* other_file, GFileMonitorEvent event_type);
+#endif
 	void on_button_press_event();
 
 private:
 	Window* m_window;
 	GtkWidget* m_container;
 	GtkWidget* m_image;
+#if HAVE_ACCOUNTSERVICE
+	ActUserManager* m_act_um;
+	ActUser* m_act_user;
+#else
 	GFileMonitor* m_file_monitor;
+#endif
 };
 
 }
