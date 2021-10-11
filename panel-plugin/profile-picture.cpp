@@ -46,16 +46,16 @@ ProfilePicture::ProfilePicture(Window* window) :
 	gtk_widget_set_tooltip_text(m_container, command->get_tooltip());
 
 #if HAVE_ACCOUNTSERVICE
-	m_act_um = act_user_manager_get_default();
+	m_act_user_manager = act_user_manager_get_default();
 	gboolean loaded = FALSE;
-	g_object_get(m_act_um, "is-loaded", &loaded, nullptr);
+	g_object_get(m_act_user_manager, "is-loaded", &loaded, nullptr);
 	if (loaded)
 	{
-		on_user_info_loaded(m_act_um, nullptr);
+		on_user_info_loaded(m_act_user_manager, nullptr);
 	}
 	else
 	{
-		g_signal_connect_slot(m_act_um, "notify::is-loaded", &ProfilePicture::on_user_info_loaded, this);
+		g_signal_connect_slot(m_act_user_manager, "notify::is-loaded", &ProfilePicture::on_user_info_loaded, this);
 	}
 #else
 	gchar* path = g_build_filename(g_get_home_dir(), ".face", nullptr);
@@ -75,7 +75,7 @@ ProfilePicture::ProfilePicture(Window* window) :
 ProfilePicture::~ProfilePicture()
 {
 #if HAVE_ACCOUNTSERVICE
-	g_object_unref(m_act_um);
+	g_object_unref(m_act_user_manager);
 	g_object_unref(m_act_user);
 #else
 	g_file_monitor_cancel(m_file_monitor);
@@ -165,15 +165,15 @@ void ProfilePicture::on_user_loaded(ActUser* user, GParamSpec*)
 
 void ProfilePicture::on_user_info_loaded(ActUserManager*, GParamSpec*)
 {
-	if (act_user_manager_no_service(m_act_um))
+	if (act_user_manager_no_service(m_act_user_manager))
 	{
 		gtk_image_set_from_icon_name(GTK_IMAGE(m_image), "avatar-default", GTK_ICON_SIZE_DND);
 		return;
 	}
 
-	g_signal_connect_slot(m_act_um, "user-changed", &ProfilePicture::on_user_changed, this);
+	g_signal_connect_slot(m_act_user_manager, "user-changed", &ProfilePicture::on_user_changed, this);
 
-	m_act_user = act_user_manager_get_user_by_id(m_act_um, getuid());
+	m_act_user = act_user_manager_get_user_by_id(m_act_user_manager, getuid());
 	if (act_user_is_loaded(m_act_user))
 	{
 		on_user_changed(nullptr, m_act_user);
