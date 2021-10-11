@@ -22,7 +22,7 @@
 
 #include <gtk/gtk.h>
 
-#if HAVE_ACCOUNTSERVICE
+#ifdef HAS_ACCOUNTSERVICE
 #include <act/act.h>
 #endif
 
@@ -51,7 +51,7 @@ public:
 
 private:
 	void set_file_picture(const gchar* file);
-#if HAVE_ACCOUNTSERVICE
+#ifdef HAS_ACCOUNTSERVICE
 	void on_user_changed(ActUserManager* um, ActUser* user);
 	void on_user_loaded(ActUser* user, GParamSpec* param);
 	void on_user_info_loaded(ActUserManager* um, GParamSpec* param);
@@ -64,7 +64,7 @@ private:
 	Window* m_window;
 	GtkWidget* m_container;
 	GtkWidget* m_image;
-#if HAVE_ACCOUNTSERVICE
+#ifdef HAS_ACCOUNTSERVICE
 	ActUserManager* m_act_user_manager;
 	ActUser* m_act_user;
 #else
