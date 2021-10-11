@@ -65,7 +65,7 @@ private:
 	GtkWidget* m_container;
 	GtkWidget* m_image;
 #if HAVE_ACCOUNTSERVICE
-	ActUserManager* m_act_um;
+	ActUserManager* m_act_user_manager;
 	ActUser* m_act_user;
 #else
 	GFileMonitor* m_file_monitor;
