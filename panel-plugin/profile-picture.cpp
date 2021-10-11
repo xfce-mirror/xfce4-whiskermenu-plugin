@@ -93,7 +93,7 @@ void ProfilePicture::reset_tooltip()
 
 //-----------------------------------------------------------------------------
 
-static GdkPixbuf *round_pixbuf_file_at_size (const gchar* file, gint size)
+static GdkPixbuf* round_pixbuf_file_at_size(const gchar* file, gint size)
 {
 	GdkPixbuf* pixbuf = gdk_pixbuf_new_from_file_at_size(file, size, size, nullptr);
 	if (!pixbuf)
@@ -111,7 +111,7 @@ static GdkPixbuf *round_pixbuf_file_at_size (const gchar* file, gint size)
 	gdk_cairo_set_source_pixbuf(cr, pixbuf, 0, 0);
 	cairo_paint(cr);
 
-	GdkPixbuf *dest = gdk_pixbuf_get_from_surface(surface, 0, 0, size, size);
+	GdkPixbuf* dest = gdk_pixbuf_get_from_surface(surface, 0, 0, size, size);
 	cairo_surface_destroy(surface);
 	cairo_destroy(cr);
 
