@@ -1,3 +1,0 @@
-#pragma once
-
-#define HAVE_ACCOUNTSERVICE @HAVE_ACCOUNTSERVICE@

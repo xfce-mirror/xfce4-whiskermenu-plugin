@@ -47,7 +47,7 @@ ProfilePicture::ProfilePicture(Window* window) :
 	Command* command = wm_settings->command[Settings::CommandProfile];
 	gtk_widget_set_tooltip_text(m_container, command->get_tooltip());
 
-#if HAVE_ACCOUNTSERVICE
+#ifdef HAS_ACCOUNTSERVICE
 	m_act_user_manager = act_user_manager_get_default();
 	gboolean loaded = FALSE;
 	g_object_get(m_act_user_manager, "is-loaded", &loaded, nullptr);
@@ -76,7 +76,7 @@ ProfilePicture::ProfilePicture(Window* window) :
 
 ProfilePicture::~ProfilePicture()
 {
-#if HAVE_ACCOUNTSERVICE
+#ifdef HAS_ACCOUNTSERVICE
 	g_object_unref(m_act_user_manager);
 	g_object_unref(m_act_user);
 #else
@@ -143,7 +143,7 @@ void ProfilePicture::set_file_picture(const gchar* file)
 	}
 }
 
-#if HAVE_ACCOUNTSERVICE
+#ifdef HAS_ACCOUNTSERVICE
 //-----------------------------------------------------------------------------
 
 void ProfilePicture::on_user_changed(ActUserManager*, ActUser* user)
