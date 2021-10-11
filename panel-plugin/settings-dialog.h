@@ -57,6 +57,7 @@ private:
 	void toggle_position_categories_alternate(GtkToggleButton* button);
 	void toggle_position_search_alternate(GtkToggleButton* button);
 	void toggle_position_commands_alternate(GtkToggleButton* button);
+	void toggle_show_rounded_profile_picture(GtkToggleButton* button);
 	void category_icon_size_changed(GtkComboBox* combo);
 	void item_icon_size_changed(GtkComboBox* combo);
 	void background_opacity_changed(GtkRange* range);
@@ -111,6 +112,7 @@ private:
 	GtkWidget* m_position_categories_alternate;
 	GtkWidget* m_position_search_alternate;
 	GtkWidget* m_position_commands_alternate;
+	GtkWidget *m_show_rounded_profile_picture;
 	GtkWidget* m_category_icon_size;
 	GtkWidget* m_item_icon_size;
 	GtkWidget* m_background_opacity;

@@ -18,8 +18,6 @@
 #ifndef WHISKERMENU_PROFILE_PICTURE_H
 #define WHISKERMENU_PROFILE_PICTURE_H
 
-#include "config.h"
-
 #include <gtk/gtk.h>
 
 #ifdef HAS_ACCOUNTSERVICE
@@ -48,9 +46,9 @@ public:
 	}
 
 	void reset_tooltip();
+	void update_profile_picture();
 
 private:
-	void set_file_picture(const gchar* file);
 #ifdef HAS_ACCOUNTSERVICE
 	void on_user_changed(ActUserManager* um, ActUser* user);
 	void on_user_loaded(ActUser* user, GParamSpec* param);
@@ -70,6 +68,7 @@ private:
 #else
 	GFileMonitor* m_file_monitor;
 #endif
+	gchar *m_file_path;
 };
 
 }
