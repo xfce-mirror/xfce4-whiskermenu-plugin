@@ -156,6 +156,7 @@ private:
 	bool m_layout_categories_alternate;
 	bool m_layout_search_alternate;
 	bool m_layout_commands_alternate;
+	bool m_show_rounded_profile_picture;
 	bool m_supports_alpha;
 	bool m_child_has_focus;
 };
