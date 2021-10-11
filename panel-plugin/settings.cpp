@@ -151,6 +151,7 @@ Settings::Settings() :
 	position_commands_alternate(false),
 	position_categories_alternate(false),
 	position_categories_horizontal(true),
+	show_rounded_profile_picture(true),
 	stay_on_focus_out(false),
 
 	confirm_session_command(true),
@@ -318,6 +319,7 @@ void Settings::load(gchar* file)
 
 	position_search_alternate = xfce_rc_read_bool_entry(rc, "position-search-alternate", position_search_alternate);
 	position_commands_alternate = xfce_rc_read_bool_entry(rc, "position-commands-alternate", position_commands_alternate);
+	show_rounded_profile_picture = xfce_rc_read_bool_entry(rc, "show-rounded-profile-picture", show_rounded_profile_picture);
 	position_categories_alternate = xfce_rc_read_bool_entry(rc, "position-categories-alternate", position_categories_alternate);
 	stay_on_focus_out = xfce_rc_read_bool_entry(rc, "stay-on-focus-out", stay_on_focus_out);
 

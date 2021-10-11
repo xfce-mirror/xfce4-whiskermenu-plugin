@@ -260,6 +260,14 @@ void SettingsDialog::toggle_position_commands_alternate(GtkToggleButton* button)
 
 //-----------------------------------------------------------------------------
 
+void SettingsDialog::toggle_show_rounded_profile_picture(GtkToggleButton* button)
+{
+	wm_settings->show_rounded_profile_picture = gtk_toggle_button_get_active(button);
+	wm_settings->set_modified();
+}
+
+//-----------------------------------------------------------------------------
+
 void SettingsDialog::category_icon_size_changed(GtkComboBox* combo)
 {
 	wm_settings->category_icon_size = gtk_combo_box_get_active(combo) - 1;
@@ -782,6 +790,15 @@ GtkWidget* SettingsDialog::init_appearance_tab()
 
 	// Add space beneath options
 	gtk_widget_set_margin_bottom(m_position_commands_alternate, 12);
+
+	// Add option to show rounded profile picture
+	m_show_rounded_profile_picture = gtk_check_button_new_with_mnemonic(_("Show rounded profile picture"));
+	gtk_grid_attach(page, m_show_rounded_profile_picture, 0, 8, 2, 1);
+	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(m_show_rounded_profile_picture), wm_settings->show_rounded_profile_picture);
+	g_signal_connect_slot(m_show_rounded_profile_picture, "toggled", &SettingsDialog::toggle_show_rounded_profile_picture, this);
+
+	// Add space beneath options
+	gtk_widget_set_margin_bottom(m_show_rounded_profile_picture, 12);
 
 
 	// Add item icon size selector
