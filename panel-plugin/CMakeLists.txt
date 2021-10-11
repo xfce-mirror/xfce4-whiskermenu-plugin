@@ -63,9 +63,8 @@ target_compile_features(whiskermenu PRIVATE cxx_std_11)
 if (accountsservice_FOUND)
 	target_link_libraries(whiskermenu
 		PkgConfig::accountsservice)
-	set(HAVE_ACCOUNTSERVICE 1)
-else()
-	set(HAVE_ACCOUNTSERVICE 0)
+	target_compile_definitions(whiskermenu PRIVATE
+		HAS_ACCOUNTSERVICE)
 endif()
 
 if(ENABLE_VISIBILITY)
@@ -131,10 +130,6 @@ install(TARGETS whiskermenu LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}/xfce4/pa
 # popup script
 configure_file(${PROJECT_SOURCE_DIR}/panel-plugin/xfce4-popup-whiskermenu.in
 	${PROJECT_BINARY_DIR}/xfce4-popup-whiskermenu ESCAPE_QUOTES @ONLY)
-
-# optional build configurations
-configure_file(${PROJECT_SOURCE_DIR}/panel-plugin/config.h.in
-	${PROJECT_SOURCE_DIR}/panel-plugin/config.h ESCAPE_QUOTES @ONLY)
 
 install(PROGRAMS ${PROJECT_BINARY_DIR}/xfce4-popup-whiskermenu
 	DESTINATION ${CMAKE_INSTALL_BINDIR})
