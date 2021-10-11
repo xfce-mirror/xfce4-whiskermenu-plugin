@@ -91,6 +91,7 @@ public:
 
 	bool position_search_alternate;
 	bool position_commands_alternate;
+	bool show_rounded_profile_picture;
 	bool position_categories_alternate;
 	bool stay_on_focus_out;
 

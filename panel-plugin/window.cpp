@@ -444,13 +444,15 @@ void WhiskerMenu::Window::show(const Position position)
 			|| (m_layout_bottom != layout_bottom)
 			|| (m_layout_categories_alternate != wm_settings->position_categories_alternate)
 			|| (m_layout_search_alternate != wm_settings->position_search_alternate)
-			|| (m_layout_commands_alternate != wm_settings->position_commands_alternate))
+			|| (m_layout_commands_alternate != wm_settings->position_commands_alternate)
+			|| (m_show_rounded_profile_picture != wm_settings->show_rounded_profile_picture))
 	{
 		m_layout_left = layout_left;
 		m_layout_bottom = layout_bottom;
 		m_layout_categories_alternate = wm_settings->position_categories_alternate;
 		m_layout_search_alternate = wm_settings->position_search_alternate;
 		m_layout_commands_alternate = wm_settings->position_commands_alternate;
+		m_show_rounded_profile_picture = wm_settings->show_rounded_profile_picture;
 		update_layout();
 	}
 
@@ -1062,6 +1064,9 @@ void WhiskerMenu::Window::update_layout()
 		gtk_widget_set_margin_top(search, 6);
 		gtk_widget_set_margin_bottom(search, 0);
 	}
+
+	// Redraw the profile picture in case that change the option to round.
+	m_profilepic->update_profile_picture();
 }
 
 //-----------------------------------------------------------------------------

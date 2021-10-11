@@ -60,14 +60,12 @@ ProfilePicture::ProfilePicture(Window* window) :
 		g_signal_connect_slot(m_act_user_manager, "notify::is-loaded", &ProfilePicture::on_user_info_loaded, this);
 	}
 #else
-	gchar* path = g_build_filename(g_get_home_dir(), ".face", nullptr);
-	GFile* file = g_file_new_for_path(path);
-	g_free(path);
+	m_file_path = g_build_filename(g_get_home_dir(), ".face", nullptr);
 
+	GFile* file = g_file_new_for_path(m_file_path);
 	m_file_monitor = g_file_monitor_file(file, G_FILE_MONITOR_NONE, nullptr, nullptr);
 	g_signal_connect_slot(m_file_monitor, "changed", &ProfilePicture::on_file_changed, this);
-	on_file_changed(m_file_monitor, file, nullptr, G_FILE_MONITOR_EVENT_CHANGED);
-
+	on_file_changed(m_file_monitor, nullptr, nullptr, G_FILE_MONITOR_EVENT_CHANGED);
 	g_object_unref(file);
 #endif
 }
@@ -83,6 +81,10 @@ ProfilePicture::~ProfilePicture()
 	g_file_monitor_cancel(m_file_monitor);
 	g_object_unref(m_file_monitor);
 #endif
+	if (m_file_path)
+	{
+		g_free(m_file_path);
+	}
 }
 
 //-----------------------------------------------------------------------------
@@ -124,12 +126,19 @@ static GdkPixbuf* round_pixbuf_file_at_size(const gchar* file, gint size)
 
 //-----------------------------------------------------------------------------
 
-void ProfilePicture::set_file_picture(const gchar* file)
+void ProfilePicture::update_profile_picture()
 {
 	GdkPixbuf* pixbuf = nullptr;
-	if (file && g_file_test(file, G_FILE_TEST_EXISTS))
+	if (m_file_path && g_file_test(m_file_path, G_FILE_TEST_EXISTS))
 	{
-		pixbuf = round_pixbuf_file_at_size(file, 32);
+		if (wm_settings->show_rounded_profile_picture)
+		{
+			pixbuf = round_pixbuf_file_at_size(m_file_path, 32);
+		}
+		else
+		{
+			pixbuf = gdk_pixbuf_new_from_file_at_size(m_file_path, 32, 32, nullptr);
+		}
 	}
 
 	if (pixbuf)
@@ -153,7 +162,14 @@ void ProfilePicture::on_user_changed(ActUserManager*, ActUser* user)
 		return;
 	}
 
-	set_file_picture(act_user_get_icon_file(user));
+	if (m_file_path)
+	{
+		g_free(m_file_path);
+	}
+
+	m_file_path = g_strdup(act_user_get_icon_file(user));
+
+	update_profile_picture();
 }
 
 //-----------------------------------------------------------------------------
@@ -186,11 +202,9 @@ void ProfilePicture::on_user_info_loaded(ActUserManager*, GParamSpec*)
 	}
 }
 #else
-void ProfilePicture::on_file_changed(GFileMonitor*, GFile* file, GFile*, GFileMonitorEvent)
+void ProfilePicture::on_file_changed(GFileMonitor*, GFile*, GFile*, GFileMonitorEvent)
 {
-	gchar* path = g_file_get_path(file);
-	set_file_picture(path);
-	g_free(path);
+	update_profile_picture();
 }
 #endif
 

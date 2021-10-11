@@ -250,6 +250,14 @@ void SettingsDialog::toggle_position_commands_alternate(GtkToggleButton* button)
 
 //-----------------------------------------------------------------------------
 
+void SettingsDialog::toggle_show_rounded_profile_picture(GtkToggleButton* button)
+{
+	wm_settings->show_rounded_profile_picture = gtk_toggle_button_get_active(button);
+	wm_settings->set_modified();
+}
+
+//-----------------------------------------------------------------------------
+
 void SettingsDialog::category_icon_size_changed(GtkComboBox* combo)
 {
 	wm_settings->category_icon_size = gtk_combo_box_get_active(combo) - 1;
@@ -767,11 +775,20 @@ GtkWidget* SettingsDialog::init_appearance_tab()
 	// Add space beneath options
 	gtk_widget_set_margin_bottom(m_position_commands_alternate, 12);
 
+	// Add option to show rounded profile picture
+	m_show_rounded_profile_picture = gtk_check_button_new_with_mnemonic(_("Show rounded profile picture"));
+	gtk_grid_attach(page, m_show_rounded_profile_picture, 0, 8, 2, 1);
+	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(m_show_rounded_profile_picture), wm_settings->show_rounded_profile_picture);
+	g_signal_connect_slot(m_show_rounded_profile_picture, "toggled", &SettingsDialog::toggle_show_rounded_profile_picture, this);
+
+	// Add space beneath options
+	gtk_widget_set_margin_bottom(m_show_rounded_profile_picture, 12);
+
 
 	// Add item icon size selector
 	GtkWidget* label = gtk_label_new_with_mnemonic(_("Application icon si_ze:"));
 	gtk_widget_set_halign(label, GTK_ALIGN_START);
-	gtk_grid_attach(page, label, 0, 8, 1, 1);
+	gtk_grid_attach(page, label, 0, 9, 1, 1);
 
 	m_item_icon_size = gtk_combo_box_text_new();
 	gtk_widget_set_halign(m_item_icon_size, GTK_ALIGN_START);
@@ -782,14 +799,14 @@ GtkWidget* SettingsDialog::init_appearance_tab()
 		gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(m_item_icon_size), icon_size.c_str());
 	}
 	gtk_combo_box_set_active(GTK_COMBO_BOX(m_item_icon_size), wm_settings->launcher_icon_size + 1);
-	gtk_grid_attach(page, m_item_icon_size, 1, 8, 1, 1);
+	gtk_grid_attach(page, m_item_icon_size, 1, 9, 1, 1);
 	gtk_label_set_mnemonic_widget(GTK_LABEL(label), m_item_icon_size);
 	g_signal_connect_slot(m_item_icon_size, "changed", &SettingsDialog::item_icon_size_changed, this);
 
 	// Add category icon size selector
 	label = gtk_label_new_with_mnemonic(_("Categ_ory icon size:"));
 	gtk_widget_set_halign(label, GTK_ALIGN_START);
-	gtk_grid_attach(page, label, 0, 9, 1, 1);
+	gtk_grid_attach(page, label, 0, 10, 1, 1);
 
 	m_category_icon_size = gtk_combo_box_text_new();
 	gtk_widget_set_halign(m_category_icon_size, GTK_ALIGN_START);
@@ -799,7 +816,7 @@ GtkWidget* SettingsDialog::init_appearance_tab()
 		gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(m_category_icon_size), icon_size.c_str());
 	}
 	gtk_combo_box_set_active(GTK_COMBO_BOX(m_category_icon_size), wm_settings->category_icon_size + 1);
-	gtk_grid_attach(page, m_category_icon_size, 1, 9, 1, 1);
+	gtk_grid_attach(page, m_category_icon_size, 1, 10, 1, 1);
 	gtk_label_set_mnemonic_widget(GTK_LABEL(label), m_category_icon_size);
 	g_signal_connect_slot(m_category_icon_size, "changed", &SettingsDialog::category_icon_size_changed, this);
 
@@ -811,11 +828,11 @@ GtkWidget* SettingsDialog::init_appearance_tab()
 	// Add option to control background opacity
 	label = gtk_label_new_with_mnemonic(_("Background opacit_y:"));
 	gtk_widget_set_halign(label, GTK_ALIGN_START);
-	gtk_grid_attach(page, label, 0, 10, 1, 1);
+	gtk_grid_attach(page, label, 0, 11, 1, 1);
 
 	m_background_opacity = gtk_scale_new_with_range(GTK_ORIENTATION_HORIZONTAL, 0.0, 100.0, 1.0);
 	gtk_widget_set_hexpand(GTK_WIDGET(m_background_opacity), true);
-	gtk_grid_attach(page, m_background_opacity, 1, 10, 1, 1);
+	gtk_grid_attach(page, m_background_opacity, 1, 11, 1, 1);
 	gtk_scale_set_value_pos(GTK_SCALE(m_background_opacity), GTK_POS_RIGHT);
 	gtk_range_set_value(GTK_RANGE(m_background_opacity), wm_settings->menu_opacity);
 	g_signal_connect_slot(m_background_opacity, "value-changed", &SettingsDialog::background_opacity_changed, this);
