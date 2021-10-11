@@ -50,6 +50,7 @@ public:
 	void reset_tooltip();
 
 private:
+	void set_file_picture(const gchar* file);
 #if HAVE_ACCOUNTSERVICE
 	void on_user_changed(ActUserManager* um, ActUser* user);
 	void on_user_loaded(ActUser* user, GParamSpec* param);

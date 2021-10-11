@@ -50,10 +50,10 @@ ProfilePicture::ProfilePicture(Window* window) :
 #if HAVE_ACCOUNTSERVICE
 	m_act_um = act_user_manager_get_default();
 	gboolean loaded = FALSE;
-	g_object_get (m_act_um, "is-loaded", &loaded, nullptr);
+	g_object_get(m_act_um, "is-loaded", &loaded, nullptr);
 	if (loaded)
 	{
-		on_user_info_loaded (m_act_um, nullptr);
+		on_user_info_loaded(m_act_um, nullptr);
 	}
 	else
 	{
@@ -77,8 +77,8 @@ ProfilePicture::ProfilePicture(Window* window) :
 ProfilePicture::~ProfilePicture()
 {
 #if HAVE_ACCOUNTSERVICE
-	g_object_unref (m_act_um);
-	g_object_unref (m_act_user);
+	g_object_unref(m_act_um);
+	g_object_unref(m_act_user);
 #else
 	g_file_monitor_cancel(m_file_monitor);
 	g_object_unref(m_file_monitor);
@@ -97,28 +97,25 @@ void ProfilePicture::reset_tooltip()
 
 static GdkPixbuf *round_pixbuf_file_at_size (const gchar* file, gint size)
 {
-	GdkPixbuf *pixbuf = nullptr;
-	GdkPixbuf *dest = nullptr;
-	cairo_surface_t *surface;
-	cairo_t *cr;
-
-	pixbuf = gdk_pixbuf_new_from_file_at_size(file, size, size, nullptr);
+	GdkPixbuf* pixbuf = gdk_pixbuf_new_from_file_at_size(file, size, size, nullptr);
 	if (!pixbuf)
+	{
 		return nullptr;
+	}
 
-	surface = cairo_image_surface_create (CAIRO_FORMAT_ARGB32, size, size);
-	cr = cairo_create (surface);
+	cairo_surface_t* surface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, size, size);
+	cairo_t* cr = cairo_create(surface);
 
-	cairo_arc (cr, size/2, size/2, size/2, 0, 2 * G_PI);
-	cairo_clip (cr);
-	cairo_new_path (cr);
+	cairo_arc(cr, size/2, size/2, size/2, 0, 2 * G_PI);
+	cairo_clip(cr);
+	cairo_new_path(cr);
 
-	gdk_cairo_set_source_pixbuf (cr, pixbuf, 0, 0);
-	cairo_paint (cr);
+	gdk_cairo_set_source_pixbuf(cr, pixbuf, 0, 0);
+	cairo_paint(cr);
 
-	dest = gdk_pixbuf_get_from_surface (surface, 0, 0, size, size);
-	cairo_surface_destroy (surface);
-	cairo_destroy (cr);
+	GdkPixbuf *dest = gdk_pixbuf_get_from_surface(surface, 0, 0, size, size);
+	cairo_surface_destroy(surface);
+	cairo_destroy(cr);
 
 	g_object_unref(pixbuf);
 
@@ -127,22 +124,22 @@ static GdkPixbuf *round_pixbuf_file_at_size (const gchar* file, gint size)
 
 //-----------------------------------------------------------------------------
 
-static void set_file_picture(GtkWidget *image, const gchar* file)
+void ProfilePicture::set_file_picture(const gchar* file)
 {
 	GdkPixbuf* pixbuf = nullptr;
-	if (file && g_file_test (file, G_FILE_TEST_EXISTS))
+	if (file && g_file_test(file, G_FILE_TEST_EXISTS))
 	{
-		pixbuf = round_pixbuf_file_at_size (file, 32);
+		pixbuf = round_pixbuf_file_at_size(file, 32);
 	}
 
 	if (pixbuf)
 	{
-		gtk_image_set_from_pixbuf(GTK_IMAGE(image), pixbuf);
+		gtk_image_set_from_pixbuf(GTK_IMAGE(m_image), pixbuf);
 		g_object_unref(pixbuf);
 	}
 	else
 	{
-		gtk_image_set_from_icon_name(GTK_IMAGE(image), "avatar-default", GTK_ICON_SIZE_DND);
+		gtk_image_set_from_icon_name(GTK_IMAGE(m_image), "avatar-default", GTK_ICON_SIZE_DND);
 	}
 }
 
@@ -151,10 +148,12 @@ static void set_file_picture(GtkWidget *image, const gchar* file)
 
 void ProfilePicture::on_user_changed(ActUserManager*, ActUser* user)
 {
-	if (act_user_get_uid (user) != getuid ())
+	if (act_user_get_uid(user) != getuid())
+	{
 		return;
+	}
 
-	set_file_picture (m_image, act_user_get_icon_file(user));
+	set_file_picture(act_user_get_icon_file(user));
 }
 
 //-----------------------------------------------------------------------------
@@ -177,19 +176,21 @@ void ProfilePicture::on_user_info_loaded(ActUserManager*, GParamSpec*)
 	g_signal_connect_slot(m_act_um, "user-changed", &ProfilePicture::on_user_changed, this);
 
 	m_act_user = act_user_manager_get_user_by_id(m_act_um, getuid());
-	if (act_user_is_loaded (m_act_user)) {
+	if (act_user_is_loaded(m_act_user))
+	{
 		on_user_changed(nullptr, m_act_user);
 	}
-	else {
+	else
+	{
 		g_signal_connect_slot(m_act_user, "notify::is-loaded", &ProfilePicture::on_user_loaded, this);
 	}
 }
 #else
 void ProfilePicture::on_file_changed(GFileMonitor*, GFile* file, GFile*, GFileMonitorEvent)
 {
-	gchar *path = g_file_get_path(file);
-	set_file_picture (m_image, path);
-	g_free (path);
+	gchar* path = g_file_get_path(file);
+	set_file_picture(path);
+	g_free(path);
 }
 #endif
 
