@@ -112,10 +112,15 @@ Settings::Settings() :
 			_("_Lock Screen"),
 			"xflock4", true,
 			_("Failed to lock screen."));
+	if (g_getenv(gdmsessionenv) != NULL) {
+		switch_to_greeter_cmd = "gdmflexiserver";
+	} else {
+		switch_to_greeter_cmd = "dm-tool switch-to-greeter";
+	}
 	command[CommandSwitchUser] = new Command("command-switchuser", "show-command-switchuser",
 			"xfsm-switch-user", "system-users",
 			_("Switch _User"),
-			"dm-tool switch-to-greeter", false,
+			switch_to_greeter_cmd, false,
 			_("Failed to switch user."));
 	command[CommandLogOutUser] = new Command("command-logoutuser", "show-command-logoutuser",
 			"xfsm-logout", "system-log-out",

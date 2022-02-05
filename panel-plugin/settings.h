@@ -235,6 +235,8 @@ class Settings
 
 	void load(gchar* file);
 	void save(gchar* file);
+	const gchar* gdmsessionenv = "GDMSESSION";
+	const gchar* switch_to_greeter_cmd;
 
 	std::string m_button_title_default;
 	bool m_modified;
