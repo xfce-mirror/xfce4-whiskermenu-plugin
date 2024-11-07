@@ -443,7 +443,7 @@ gboolean Plugin::size_changed(gint size)
 	gint icon_size = xfce_panel_plugin_get_icon_size(m_plugin);
 	if (!wm_settings->button_single_row)
 	{
-		icon_size *= xfce_panel_plugin_get_nrows(m_plugin);
+		icon_size *= MIN (xfce_panel_plugin_get_nrows(m_plugin), 1.5);
 	}
 	gtk_image_set_pixel_size(m_button_icon, icon_size);
 
