@@ -15,6 +15,10 @@
  * along with this library.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#ifdef HAVE_XFCE_REVISION_H
+#include "xfce-revision.h"
+#endif
+
 #include <iostream>
 #include <string>
 #include <vector>
@@ -124,8 +128,8 @@ int main(int argc, char** argv)
 
 	if (print_version)
 	{
-		std::cout << PACKAGE_NAME << " " << PACKAGE_VERSION << "\n"
-				<< _("Copyright \302\251 2013-2025 Graeme Gott") << std::endl;
+		std::cout << PACKAGE_NAME << " " << VERSION_FULL << "\n"
+				<< "Copyright \302\251 2013-" << COPYRIGHT_YEAR << " Graeme Gott" << std::endl;
 		return EXIT_SUCCESS;
 	}
 

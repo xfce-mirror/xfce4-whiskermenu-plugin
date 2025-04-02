@@ -15,6 +15,10 @@
  * along with this library.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#ifdef HAVE_XFCE_REVISION_H
+#include "xfce-revision.h"
+#endif
+
 #include "plugin.h"
 
 #include "applications-page.h"
@@ -416,12 +420,12 @@ void Plugin::show_about()
 		(nullptr,
 		"authors", authors,
 		"comments", _("Alternate application launcher for Xfce"),
-		"copyright", _("Copyright \302\251 2013-2025 Graeme Gott"),
+		"copyright", "Copyright \302\251 2013-" COPYRIGHT_YEAR " Graeme Gott",
 		"license", XFCE_LICENSE_GPL,
 		"logo-icon-name", "org.xfce.panel.whiskermenu",
 		"program-name", PACKAGE_NAME,
 		"translator-credits", _("translator-credits"),
-		"version", PACKAGE_VERSION,
+		"version", VERSION_FULL,
 		"website", PLUGIN_WEBSITE,
 		nullptr);
 }
