@@ -56,6 +56,7 @@ public:
 	ButtonStyle get_button_style() const;
 	static std::string get_button_title_default();
 	void get_menu_position(int* x, int* y) const;
+	void get_plugin_mode(XfcePanelPluginMode* mode) const;
 
 	void menu_hidden();
 	void reload_button();
@@ -89,6 +90,11 @@ private:
 	bool m_file_icon;
 	bool m_autohide_blocked;
 	gint64 m_hide_time;
+public:
+	XfcePanelPlugin* get_m_plugin() const {
+		return m_plugin;
+}
+
 };
 
 }

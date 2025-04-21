@@ -246,6 +246,13 @@ void Plugin::get_menu_position(int* x, int* y) const
 
 //-----------------------------------------------------------------------------
 
+void Plugin::get_plugin_mode(XfcePanelPluginMode* mode) const
+{
+	*mode = xfce_panel_plugin_get_mode(m_plugin);
+}
+
+//-----------------------------------------------------------------------------
+
 void Plugin::menu_hidden()
 {
 	m_hide_time = 0;

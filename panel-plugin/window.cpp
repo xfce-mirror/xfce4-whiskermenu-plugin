@@ -614,6 +614,24 @@ void WhiskerMenu::Window::show(const Position position)
 	if (position == PositionAtButton)
 	{
 		m_plugin->get_menu_position(&m_geometry.x, &m_geometry.y);
+
+		// Center the menu if the panel is horizontal
+		XfcePanelPluginMode mode;
+		m_plugin->get_plugin_mode(&mode);
+		if (mode == XFCE_PANEL_PLUGIN_MODE_HORIZONTAL)
+		{
+			GtkWidget* button = m_plugin->get_button();
+			GdkWindow* button_window = gtk_widget_get_window(button);
+			gint button_x, button_y;
+			gdk_window_get_origin(button_window, &button_x, &button_y);
+			
+			GtkAllocation button_alloc;
+			gtk_widget_get_allocation(button, &button_alloc);
+			int button_width = button_alloc.width;
+
+			int centered_x = button_x + (button_width / 2) - (m_geometry.width / 2);
+			m_geometry.x = std::max(m_monitor.x, std::min(centered_x, m_monitor.x + m_monitor.width - m_geometry.width));
+		}
 	}
 	else if (position == PositionAtCenter)
 	{
