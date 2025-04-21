@@ -90,7 +90,6 @@ private:
 	bool m_file_icon;
 	bool m_autohide_blocked;
 	gint64 m_hide_time;
-
 };
 
 }
