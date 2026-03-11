@@ -72,6 +72,11 @@ protected:
 
 	void set_reorderable(bool reorderable);
 
+	Launcher* get_selected_launcher() const
+	{
+		return m_selected_launcher;
+	}
+
 protected:
 	Settings* const m_settings;
 
