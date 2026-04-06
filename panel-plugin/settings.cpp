@@ -45,6 +45,7 @@ Settings::Settings(Plugin* plugin) :
 	recent(this, "/recent", { }),
 
 	custom_menu_file(this, "/custom-menu-file"),
+	hide_xfce_settings_dialogs(this, "/hide-xfce-settings-dialogs", false),
 
 	button_title(this, "/button-title", m_button_title_default),
 	button_icon_name(this, "/button-icon", "org.xfce.panel.whiskermenu"),
@@ -205,6 +206,7 @@ void Settings::load(const gchar* file, bool is_default)
 	recent.load(rc, is_default);
 
 	custom_menu_file.load(rc, is_default);
+	hide_xfce_settings_dialogs.load(rc, is_default);
 
 	button_title.load(rc, is_default);
 	button_icon_name.load(rc, is_default);
@@ -370,6 +372,7 @@ void Settings::property_changed(const gchar* property, const GValue* value)
 	bool reload = true;
 	if (favorites.load(property, value, reload)
 			|| recent.load(property, value, reload)
+			|| hide_xfce_settings_dialogs.load(property, value)
 			|| launcher_show_name.load(property, value)
 			|| launcher_show_description.load(property, value)
 			|| sort_categories.load(property, value)

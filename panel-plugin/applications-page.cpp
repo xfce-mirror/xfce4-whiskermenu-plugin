@@ -29,6 +29,17 @@
 
 using namespace WhiskerMenu;
 
+namespace
+{
+
+bool is_settings_manager_launcher(const std::string& desktop_id)
+{
+	return (desktop_id == "xfce-settings-manager.desktop")
+		|| (desktop_id == "xfce4-settings-manager.desktop");
+}
+
+}
+
 //-----------------------------------------------------------------------------
 
 ApplicationsPage::ApplicationsPage(Settings* settings, Window* window) :
@@ -380,6 +391,12 @@ bool ApplicationsPage::load_menu(GarconMenu* menu, Category* parent_category, bo
 
 			// Create launcher
 			std::string desktop_id(garcon_menu_item_get_desktop_id(menuitem));
+			if (m_settings->hide_xfce_settings_dialogs
+					&& !is_settings_manager_launcher(desktop_id)
+					&& garcon_menu_item_has_category(menuitem, "X-XFCE-SettingsDialog"))
+			{
+				continue;
+			}
 			auto iter = m_items.find(desktop_id);
 			if (iter == m_items.end())
 			{
