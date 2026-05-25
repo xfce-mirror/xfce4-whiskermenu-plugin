@@ -50,6 +50,7 @@ Settings::Settings(Plugin* plugin) :
 	button_icon_name(this, "/button-icon", "org.xfce.panel.whiskermenu"),
 	button_title_visible(this, "/show-button-title", false),
 	button_icon_visible(this, "/show-button-icon", true),
+	button_icon_size(this, "/button-icon-size", IconSize::Small),
 	button_single_row(this, "/button-single-row", false),
 
 	launcher_show_name(this, "/launcher-show-name", true),

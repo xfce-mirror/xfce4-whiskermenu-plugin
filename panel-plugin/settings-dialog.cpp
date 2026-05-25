@@ -764,15 +764,36 @@ GtkWidget* SettingsDialog::init_appearance_tab()
 			m_plugin->set_button_title(text ? text : "");
 		});
 
+	// Add custom icon size selector
+	label = gtk_label_new_with_mnemonic(_("Si_ze:"));
+	gtk_widget_set_halign(label, GTK_ALIGN_START);
+	gtk_grid_attach(panel_table, label, 0, 2, 1, 1);
+
+	m_icon_size = gtk_combo_box_text_new();
+	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(m_icon_size), _("Small"));
+	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(m_icon_size), _("Medium"));
+	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(m_icon_size), _("Large"));
+	gtk_combo_box_set_active(GTK_COMBO_BOX(m_icon_size), m_settings->button_icon_size);
+	gtk_widget_set_halign(m_icon_size, GTK_ALIGN_START);
+	gtk_widget_set_hexpand(m_icon_size, false);
+	gtk_grid_attach(panel_table, m_icon_size, 1, 2, 1, 1);
+	gtk_label_set_mnemonic_widget(GTK_LABEL(label), m_icon_size);
+
+	connect(m_icon_size, "changed",
+		[this](GtkComboBox* combo)
+		{
+			m_settings->button_icon_size = gtk_combo_box_get_active(combo);
+		});
+
 	// Add icon selector
 	label = gtk_label_new_with_mnemonic(_("_Icon:"));
 	gtk_widget_set_halign(label, GTK_ALIGN_START);
-	gtk_grid_attach(panel_table, label, 0, 2, 1, 1);
+	gtk_grid_attach(panel_table, label, 0, 3, 1, 1);
 
 	m_icon_button = gtk_button_new();
 	gtk_widget_set_halign(m_icon_button, GTK_ALIGN_START);
 	gtk_label_set_mnemonic_widget(GTK_LABEL(label), m_icon_button);
-	gtk_grid_attach(panel_table, m_icon_button, 1, 2, 1, 1);
+	gtk_grid_attach(panel_table, m_icon_button, 1, 3, 1, 1);
 
 	connect(m_icon_button, "clicked",
 		[this](GtkButton*)
@@ -784,7 +805,7 @@ GtkWidget* SettingsDialog::init_appearance_tab()
 	gtk_container_add(GTK_CONTAINER(m_icon_button), m_icon);
 
 	m_button_single_row = gtk_check_button_new_with_mnemonic(_("Use a single _panel row"));
-	gtk_grid_attach(panel_table, m_button_single_row, 1, 3, 1, 1);
+	gtk_grid_attach(panel_table, m_button_single_row, 1, 4, 1, 1);
 	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(m_button_single_row), m_settings->button_single_row);
 	gtk_widget_set_sensitive(m_button_single_row, gtk_combo_box_get_active(GTK_COMBO_BOX (m_button_style)) == 0);
 

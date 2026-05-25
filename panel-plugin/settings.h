@@ -309,6 +309,7 @@ public:
 	String button_icon_name;
 	Boolean button_title_visible;
 	Boolean button_icon_visible;
+	IconSize button_icon_size;
 	Boolean button_single_row;
 
 	Boolean launcher_show_name;

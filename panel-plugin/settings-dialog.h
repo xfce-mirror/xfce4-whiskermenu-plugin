@@ -76,6 +76,7 @@ private:
 	GtkWidget* m_show_descriptions;
 	GtkWidget* m_show_tooltips;
 	GtkWidget* m_category_icon_size;
+	GtkWidget* m_icon_size;
 	GtkWidget* m_item_icon_size;
 	GtkWidget* m_background_opacity;
 
