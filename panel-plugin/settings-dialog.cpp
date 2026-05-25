@@ -783,6 +783,7 @@ GtkWidget* SettingsDialog::init_appearance_tab()
 		[this](GtkComboBox* combo)
 		{
 			m_settings->button_icon_size = gtk_combo_box_get_active(combo);
+			m_plugin->reload_button();
 		});
 
 	// Add icon selector

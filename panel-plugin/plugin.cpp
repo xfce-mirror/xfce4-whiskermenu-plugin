@@ -455,6 +455,9 @@ gboolean Plugin::size_changed(gint size)
 	{
 		icon_size *= xfce_panel_plugin_get_nrows(m_plugin);
 	}
+
+	icon_size = m_settings->button_icon_size.get_size();
+
 	gtk_image_set_pixel_size(m_button_icon, icon_size);
 
 	// Load icon from absolute path
