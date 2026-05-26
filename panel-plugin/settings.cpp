@@ -212,6 +212,7 @@ void Settings::load(const gchar* file, bool is_default)
 	button_single_row.load(rc, is_default);
 	button_title_visible.load(rc, is_default);
 	button_icon_visible.load(rc, is_default);
+	button_icon_size.load(rc, is_default);
 
 	launcher_show_name.load(rc, is_default);
 	launcher_show_description.load(rc, is_default);
@@ -386,7 +387,8 @@ void Settings::property_changed(const gchar* property, const GValue* value)
 			|| button_icon_name.load(property, value)
 			|| button_title_visible.load(property, value)
 			|| button_icon_visible.load(property, value)
-			|| button_single_row.load(property, value))
+			|| button_single_row.load(property, value)
+			|| button_icon_size.load(property, value))
 	{
 		m_plugin->reload_button();
 	}
