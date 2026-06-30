@@ -366,6 +366,7 @@ WhiskerMenu::Window::Window(Settings* settings, Plugin* plugin) :
 
 	// Load applications
 	m_applications->load();
+	gtk_window_set_focus(m_window, m_commands_button[0]);
 
 	g_object_ref_sink(m_window);
 }
