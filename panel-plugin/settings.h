@@ -304,6 +304,7 @@ public:
 	StringList recent;
 
 	String custom_menu_file;
+	Boolean hide_xfce_settings_dialogs;
 
 	String button_title;
 	String button_icon_name;
