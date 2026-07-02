@@ -202,7 +202,6 @@ WhiskerMenu::Window::Window(Settings* settings, Plugin* plugin) :
 
 	// Create search entry
 	m_search_entry = GTK_ENTRY(gtk_search_entry_new());
-	gtk_window_set_focus(m_window, GTK_WIDGET(m_search_entry));
 
 	connect(m_search_entry, "changed",
 		[this](GtkEditable*)
