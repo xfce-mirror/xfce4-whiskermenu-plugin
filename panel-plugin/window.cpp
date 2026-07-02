@@ -202,7 +202,6 @@ WhiskerMenu::Window::Window(Settings* settings, Plugin* plugin) :
 
 	// Create search entry
 	m_search_entry = GTK_ENTRY(gtk_search_entry_new());
-	gtk_window_set_focus(m_window, GTK_WIDGET(m_search_entry));
 
 	connect(m_search_entry, "changed",
 		[this](GtkEditable*)
@@ -366,7 +365,6 @@ WhiskerMenu::Window::Window(Settings* settings, Plugin* plugin) :
 
 	// Load applications
 	m_applications->load();
-	gtk_window_set_focus(m_window, m_commands_button[0]);
 
 	g_object_ref_sink(m_window);
 }
